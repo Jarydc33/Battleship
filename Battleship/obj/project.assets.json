@@ -694,11 +694,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jaryd\\Desktop\\Battleship\\Battleship\\Battleship\\Battleship.csproj",
+      "projectUniqueName": "C:\\Users\\Jaryd\\Desktop\\Battleship\\Battleship\\Battleship.csproj",
       "projectName": "Battleship",
-      "projectPath": "C:\\Users\\Jaryd\\Desktop\\Battleship\\Battleship\\Battleship\\Battleship.csproj",
+      "projectPath": "C:\\Users\\Jaryd\\Desktop\\Battleship\\Battleship\\Battleship.csproj",
       "packagesPath": "C:\\Users\\Jaryd\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jaryd\\Desktop\\Battleship\\Battleship\\Battleship\\obj\\",
+      "outputPath": "C:\\Users\\Jaryd\\Desktop\\Battleship\\Battleship\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
