@@ -8,7 +8,7 @@ namespace Battleship
     {
         public int BoatSize;
         public string type;
-        public bool isHit;
+        
         public int i = 0;        
         public int[]Data = new int[5];       
     }
