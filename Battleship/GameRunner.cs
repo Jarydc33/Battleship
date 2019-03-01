@@ -8,11 +8,21 @@ namespace Battleship
     {        
         Player player1;
         Player player2;
-                
+        Destroyer destroyer;
+        Submarine submarine;
+        Battleship battleship;
+        Carrier carrier;
+        int[] Data;
+
         public GameRunner()
         {
             player1 = new Player();
-            player2 = new Player();           
+            player2 = new Player();
+            destroyer = new Destroyer();
+            submarine = new Submarine();
+            battleship = new Battleship();
+            carrier = new Carrier();
+            Data = new int[5];
             player1.GenerateInitialGameBoard();
             PlacePieces();
                         
@@ -20,17 +30,14 @@ namespace Battleship
 
         public void PlacePieces()
         {
-            int[] location1 = new int[2];
-            int[] location2 = new int[2];
-
-            Destroyer temp = new Destroyer();
-            location1[0] = temp.Placement();
-            location1[1] = temp.Placement();
-            player1.UpdateGameBoard(location1[0],location1[1]);
-
-            location2[0] = temp.Placement();
-            location2[1] = temp.Placement();
-            player1.UpdateGameBoard(location2[0], location2[1]);
+            Data = destroyer.Placement();
+            player1.UpdateGameBoard(Data[0], Data[1], Data[2], Data[3], Data[4], Data[4]);
+            Data = submarine.Placement();
+            player1.UpdateGameBoard(Data[0], Data[1], Data[2], Data[3], Data[4], Data[4]);
+            Data = battleship.Placement();
+            player1.UpdateGameBoard(Data[0], Data[1], Data[2], Data[3], Data[4], Data[4]);
+            Data = carrier.Placement();
+            player1.UpdateGameBoard(Data[0], Data[1], Data[2], Data[3], Data[4], Data[4]);
 
         }
 

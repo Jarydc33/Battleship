@@ -7,8 +7,9 @@ namespace Battleship
     public abstract class Ship
     {
         public int BoatSize;
+        public string type;
         public bool isHit;
-        public int i = 0;
-
+        public int i = 0;        
+        public int[]Data = new int[5];       
     }
 }
