@@ -13,9 +13,20 @@ namespace Battleship
         {
             player1 = new Player();
             player2 = new Player();
+            PlacePieces();                 
+        }
+
+        public void PlacePieces()
+        {
             player1.GenerateInitialGameBoard();
             player1.PlacePieces();
-                                    
+            player2.GenerateInitialGameBoard();
+            player2.PlacePieces();
+        }
+
+        public void StartTurns()
+        {
+
         }
                
              

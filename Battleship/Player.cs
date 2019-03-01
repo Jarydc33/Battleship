@@ -11,14 +11,16 @@ namespace Battleship
         Submarine submarine;
         Battleship battleship;
         Carrier carrier;
+        int counter = 1;
+        int size;
+        string type;
 
         public Player()
         {            
             destroyer = new Destroyer();
             submarine = new Submarine();
             battleship = new Battleship();
-            carrier = new Carrier();
-
+            carrier = new Carrier();            
         }
 
         public void GenerateInitialGameBoard()
@@ -33,105 +35,141 @@ namespace Battleship
                     Console.Write(gameBoard[i,j] + " ");
                 }
                 Console.Write("\n");
-            }
-            Console.ReadLine();
-            
+                Console.Clear();
+            }            
         }
 
         public void PlacePieces()
-        {
+        {            
             int[] location = new int[4];
 
-            Console.WriteLine("Please enter the coordinates for your destroyer: ");
-            location[0] = int.Parse(Console.ReadLine());
-            location[1] = int.Parse(Console.ReadLine());
-                    
-            gameBoard[location[0], location[1]] = "+";
+            if (counter == 1)
+            {
+                Console.WriteLine("Please enter the coordinates for your Destroyer: ");
+                size = destroyer.BoatSize;
+                type = destroyer.type;
+            }
+            else if(counter == 2)
+            {
+                Console.WriteLine("Please enter the coordinates for your Submarine: ");
+                size = submarine.BoatSize;
+                type = submarine.type;
+            }
+            else if(counter == 3)
+            {
+                Console.WriteLine("Please enter the coordinates for your Battleship: ");
+                size = battleship.BoatSize;
+                type = battleship.type;
+            }
+            else if(counter == 4)
+            {
+                Console.WriteLine("Please enter the coordinates for your Aircraft Carrier: ");
+                size = carrier.BoatSize;
+                type = carrier.type;
+            }
+            location[0] = StringChecker();
+            location[1] = StringChecker();
+            
             if (gameBoard[location[0], location[1]] != ".")
             {
                 Console.WriteLine("You already placed a boat in that location!");
+                gameBoard[location[0], location[1]] = ".";
+                gameBoard[location[2], location[3]] = ".";
                 PlacePieces();
             }
+            gameBoard[location[0], location[1]] = type;
 
-            location[2] = int.Parse(Console.ReadLine());
-            location[3] = int.Parse(Console.ReadLine());
-            gameBoard[location[2], location[3]] = "+";
+            location[2] = StringChecker();
+            location[3] = StringChecker();
+
             if (gameBoard[location[2], location[3]] != ".")
             {
                 Console.WriteLine("You already placed a boat in that location!");
+                gameBoard[location[0], location[1]] = ".";
+                gameBoard[location[2], location[3]] = ".";
                 PlacePieces();
             }
+            gameBoard[location[2], location[3]] = type;
+
+            SizeChecker(location);
             PieceFiller(location);
-
-        }
-
-        public void PieceFiller(int[] ArrayFiller)
-        {
             Console.Clear();
-            
-            if (ArrayFiller[0] == ArrayFiller[2])
-            {
-                int i = 1;
-                while (gameBoard[ArrayFiller[0], ArrayFiller[i] + 1] != "+")
-                {
-                   
-                    gameBoard[ArrayFiller[0], ArrayFiller[i] + 1] = "+";
-                    i++;
-                   
-                }
-            }
-            else
-            {
-                int i = 0;
-                while (gameBoard[ArrayFiller[i] + 1, ArrayFiller[1]] != "+")
-                {                   
-                    gameBoard[ArrayFiller[i] + 1, ArrayFiller[1]] = "+";
-                    i++;                
-                }
-            }
-
-            if (location1 + location2 - (location3 + location4) > size - 1)
-            {
-
-                Console.WriteLine("Youre boat can`t be longer than " + size + ", please place again.");
-                PlacePieces();
-            }
-            else if ((location3 + location4) - (location1 + location2) > size - 1)
-            {
-                Console.WriteLine("Youre boat can`t be longer than " + size + ", please place again.");
-                PlacePieces();
-            }
-
 
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 20; j++)
                 {
-                    Console.Write(player1.gameBoard[i, j] + " ");
+                    Console.Write(gameBoard[i, j] + " ");
                 }
-                Console.Write("\n");
-
+                Console.Write("\n");                
             }
+            counter++;
+            if(counter < 5)
+            {
+                PlacePieces();
+            }
+            else
+            {
+                Console.WriteLine("Time for Player 2 to place his pieces! Press any key to start your turn.");
+                Console.ReadLine();
+            }
+        }
+
+        public void PieceFiller(int[] ArrayFiller)
+        {
+            
+            if (ArrayFiller[0] == ArrayFiller[2])
+            {
+                int i = 1;
+                while (gameBoard[ArrayFiller[0], ArrayFiller[1] + i] != type)
+                {
+                    gameBoard[ArrayFiller[0], ArrayFiller[1] + i] = type;
+                    i++;
+                }
+            }
+            else
+            {
+                int i = 0;
+                while (gameBoard[ArrayFiller[0] + 1 , ArrayFiller[1]] != type)
+                {
+                    gameBoard[ArrayFiller[0] + 1 , ArrayFiller[1]] = type;
+                    i++;
+                }
+            }
+        }
+
+        public void SizeChecker(int[] SizeArray) { 
+
+            if (SizeArray[0] + SizeArray[1] - (SizeArray[2] + SizeArray[3]) > size - 1)
+            {
+
+                Console.WriteLine("Your boat can`t be longer than " + size + ", please enter the coordinates again.");
+                PlacePieces();
+            }
+            else if (SizeArray[2] + SizeArray[3] - (SizeArray[0] + SizeArray[1]) > size - 1)
+            {
+                Console.WriteLine("Your boat can`t be longer than " + size + ", please enter the coordinate again.");
+                PlacePieces();
+            }
+                                  
+        }
+        public int StringChecker()
+        {
+            bool test;
+            int number;
+            test = int.TryParse(Console.ReadLine(),out number);
+            if (test)
+            {
+                return number;
+            }
+            else
+            {
+                Console.WriteLine("Please enter an appropriate number.");
+                PlacePieces();
+                return 0;
+            }
+            
         }
 
     }
 }
-
-
-
- if (location1 == location3)
-            {
-                while (player1.gameBoard[location1, location2 + 1] != newType)
-                {
-                    if (player1.gameBoard[location1, location2] != ".")
-                    {
-                        Console.WriteLine("You already placed a boat in that location!");
-                        PlacePieces();
-                    }
-                    else
-                    {
-                        player1.gameBoard[location1, location2 + 1] = newType;
-                        location2++;
-                    }
-                }
-            }
