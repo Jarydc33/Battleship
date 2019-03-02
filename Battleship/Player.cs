@@ -7,6 +7,8 @@ namespace Battleship
     public class Player
     {
         public string[,] gameBoard;
+        public string[,] KnownBoard;
+        int[] location = new int[4];
         Destroyer destroyer;
         Submarine submarine;
         Battleship battleship;
@@ -14,24 +16,28 @@ namespace Battleship
         int counter = 1;
         int size;
         string type;
+        bool TakenTurn;
 
         public Player()
         {            
             destroyer = new Destroyer();
             submarine = new Submarine();
             battleship = new Battleship();
-            carrier = new Carrier();            
+            carrier = new Carrier();
+            TakenTurn = false;
         }
 
         public void GenerateInitialGameBoard()
         {
             gameBoard = new string[20, 20];
+            KnownBoard = new string[20, 20];
 
             for (int i = 0; i<20; i++)
             {
                 for(int j = 0; j<20; j++)
                 {
                     gameBoard[i, j] = ".";
+                    KnownBoard[i, j] = ".";
                     Console.Write(gameBoard[i,j] + " ");
                 }
                 Console.Write("\n");
@@ -40,9 +46,8 @@ namespace Battleship
         }
 
         public void PlacePieces()
-        {            
-            int[] location = new int[4];
-
+        {          
+            
             if (counter == 1)
             {
                 Console.WriteLine("Please enter the coordinates for your Destroyer: ");
@@ -110,8 +115,19 @@ namespace Battleship
             }
             else
             {
-                Console.WriteLine("Time for Player 2 to place his pieces! Press any key to start your turn.");
-                Console.ReadLine();
+                if (TakenTurn)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Looks like it is time to start the game!");
+                    
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Time for Player 2 to place his pieces! Press any key to start your turn.");
+                    Console.ReadLine();
+                    TakenTurn = true;
+                }
             }
         }
 
@@ -153,6 +169,7 @@ namespace Battleship
             }
                                   
         }
+
         public int StringChecker()
         {
             bool test;
@@ -169,6 +186,48 @@ namespace Battleship
                 return 0;
             }
             
+        }
+
+        public void TakeTurn(string[,] OppBoard)
+        {
+            Console.Clear();
+            Console.WriteLine("Your game board:");
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 20; j++)
+                {                    
+                    Console.Write(gameBoard[i, j] + " ");
+                }
+                Console.Write("\n");                
+            }
+            Console.WriteLine("Your target board:");
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 20; j++)
+                {
+                    Console.Write(KnownBoard[i, j] + " ");
+                }
+                Console.Write("\n");
+            }
+
+            Console.WriteLine("What target would you like to hit?");
+            location[0] = int.Parse(Console.ReadLine());
+            location[1] = int.Parse(Console.ReadLine());
+
+            if(OppBoard[location[0],location[1]] != ".")
+            {
+                Console.WriteLine("Direct hit! Press any key to continue");
+                KnownBoard[location[0], location[1]] = "X";
+                Console.ReadLine();
+
+            }
+            else
+            {
+                Console.WriteLine("Looks like a miss! Press any key to continue");
+                KnownBoard[location[0], location[1]] = "O";
+                Console.ReadLine();
+            }
+
         }
 
     }
